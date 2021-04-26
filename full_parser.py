@@ -2,13 +2,22 @@ from selenium.webdriver import Chrome
 
 driver = Chrome()
 
+file = open('finish.txt', 'r').readlines()
 
-file = open('vacancies.txt', 'r').read().split(';')
 
-for f in file:
+file = list(set(file))
+
+def parse(f):
     driver.get(f)
-    print(f[-8:])
+    print('new parsed')
 
     page = driver.find_element_by_tag_name('html').get_attribute("innerHTML")
 
-    open(f'{f[-8:]}.html', 'w').write(str(page))
+    open(f'web/{f[-8:]}.html', 'w').write(str(page))
+    print('writed')
+
+
+for f in file:
+    print(f.split('\n')[0])
+    parse(f.split('\n')[0])
+
